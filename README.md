@@ -1,5 +1,97 @@
+<div align="center">
+
 # 上打瓦 · 空军第一人
 
-生日祝福单页：玻璃罩里的 3D 星空蛋糕、满屏乱撞的星星、烟花、点击头像有惊喜小档案。
+**玻璃罩里的 3D 星空蛋糕 · 满天乱撞的星星 · 一直在放的烟花**
 
-打开：https://jilijhao.github.io/birthday-afj/
+[![在线预览](https://img.shields.io/badge/在线预览-%E7%82%B9%E6%88%91%E6%89%93%E5%BC%80-2ea44f?style=for-the-badge)](https://jilijhao.github.io/birthday-afj/)
+[![单文件](https://img.shields.io/badge/%E5%8D%95%E6%96%87%E4%BB%B6-HTML5-e34f26?style=flat-square)](#)
+[![Three.js](https://img.shields.io/badge/3D-Three.js%20r150-000000?style=flat-square)](#)
+[![无依赖](https://img.shields.io/badge/%E5%A4%96%E9%93%BE%E4%BE%9D%E8%B5%96-0-8957e5?style=flat-square)](#)
+
+<img src="./preview.png" width="300" alt="预览" />
+
+</div>
+
+---
+
+## 这是什么
+
+一个给朋友的生日祝福单页，打开就是全屏的：玻璃罩里一颗缓慢自转的深空蛋糕、罩子里乱撞的星星、不断升空的烟花，外加一首背景音乐。
+
+没有框架、没有构建、没有任何外链依赖——`index.html` 一个文件就包含全部画面、3D 引擎与音频，可以直接双击打开，也可以丢到任意静态托管上。
+
+## 效果一览
+
+| 元素 | 说明 |
+| --- | --- |
+| 🎂 3D 蛋糕 | Three.js 程序化生成，圆柱体 + 深空星云贴图 + 清漆高光，绕 Y 轴自转并轻微俯仰 |
+| ✨ 罩内星空 | 26 颗四芒星在玻璃罩内快速乱撞，撞到罩壁按椭圆法线反射，速度越弹越快 |
+| 🎆 烟花 | 每 3.4~5 秒从屏幕底部**六发齐射**（3 列 × 2 排，互不重叠），罩子里另有小烟花不断冒出 |
+| 🖼 飘浮头像 | 寿星头像在屏幕内来回乱撞、随机拐弯，双击区域可命中 |
+| 🧾 惊喜档案 | 点任意一个飘浮头像，弹出「绝密档案」卡片，顺带放一朵烟花 |
+| 🧧 红布横幅 | 顶部红布条幅，织纹、卷边暗角、扫光，文字是金色渐变的「上打瓦 - 空军第一人」 |
+| 🎵 背景音乐 | 《八千里路明月照（氛围版）》，点一下屏幕开始播放，右上角 ♪ 可静音 |
+| 💻 代码背景 | 左上角打字机逐字敲出的 `birthday.js`，致敬原视频的编辑器画面 |
+
+## 玩法
+
+- **点屏幕** —— 在该位置放一朵烟花（第一次点击还会开始播放音乐）
+- **点头像** —— 弹出寿星档案卡，轻触任意处收起
+- **右上角 ♪** —— 静音 / 恢复
+- 什么都不做 —— 烟花会自己一直放，六发一轮
+
+## 技术要点
+
+几个踩过的坑，都写在代码注释里：
+
+1. **SVG 星点定位**：元素用 `transform="translate(x,y)"` 属性定位时，CSS 动画里不能再写 `transform: scale()`，否则会覆盖定位属性，所有星点塌到原点被裁掉。动画只动 `opacity`。
+2. **入场文字**：静态样式必须是「可见」状态，`@keyframes` 从 `opacity: 0` 开始。不要用 `opacity: 0 + forwards`，动画一旦不跑就永久不可见。
+3. **烟花弹道**：先算竖直初速度 `vy0 = -(dist/dur) - 0.5*g*dur`，保证火箭正好在目标点炸开；壳体粒子速度取相近值（0.84~1.0）才炸成球面而不是一团；彗尾用「速度 × 固定时间」画线段，与帧率无关。
+4. **内嵌浏览器的 rAF**：微信内置浏览器会限制 `requestAnimationFrame`，导致动画完全不跑。方案是加一层兜底驱动——超过 200ms 没有新帧就用 `setInterval` 接管渲染。
+5. **iOS 音频**：几 MB 的 base64 内嵌音频在 iOS 上 `play()` 会被静默拒绝，所以线上优先加载同目录的 `bgm.mp3`（HTTP 资源），base64 版本降级为第二个 `<source>`。
+6. **书写体**：iOS 微信里系统花体字不可用，所以内嵌了一个 29KB 的 [Great Vibes](https://fonts.google.com/specimen/Great+Vibes)（OFL 授权）woff2 子集。
+
+## 目录
+
+```
+.
+├── index.html    # 全部内容：HTML + CSS + 3D 场景 + 粒子系统（内嵌 three.js）
+├── bgm.mp3       # 背景音乐
+├── preview.png   # 预览图 / 分享卡片缩略图
+└── README.md
+```
+
+## 自己改一份
+
+页面底部 `CONFIG` 一处集中配置：
+
+```js
+var CONFIG = {
+  name: "空军杰",            // 收祝福的人
+  prefix: "送 ",             // 名字前缀
+  title: "Happy birthday",  // 主标题
+};
+```
+
+- 顶部横幅文字：搜 `bannerTxt`，改标签里的内容
+- 档案卡内容：搜 `pf-rows`，四行 `性别 / 身高 / 年龄 / 爱好`
+- 换音乐：替换 `bgm.mp3` 即可（记得同时更新 `<source>` 里的 base64，或直接删掉那个 source）
+
+## 兼容性
+
+| 环境 | 表现 |
+| --- | --- |
+| iOS Safari / 安卓 Chrome | 完整效果 |
+| 微信内置浏览器 | 可以看，但受限制：需要**点一下屏幕**才有声音，动画由定时器兜底驱动会略降帧 |
+| 桌面浏览器 | 完整效果，鼠标点击等同手指点击 |
+
+追求最稳的效果，建议在微信里点右上角「···」→「在 Safari 中打开」。
+
+调试：任意地址后加 `?debug=1`，页面底部会显示运行时错误。
+
+## 说明
+
+页面里包含一张真人照片（寿星本人），仅作私人祝福用途。仓库公开是为了使用免费的 GitHub Pages，请勿另作他用。
+
+字体 [Great Vibes](https://fonts.google.com/specimen/Great+Vibes) 遵循 SIL Open Font License 1.1；3D 引擎 [three.js](https://threejs.org/) 遵循 MIT License。
