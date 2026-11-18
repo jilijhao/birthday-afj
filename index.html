@@ -1610,13 +1610,17 @@ window.__errs = [];
     g.fillStyle = lg; g.fillRect(0, 0, w, h);
 
     // 星云
+    // 横向画三份，贴图左右边界才能接上，避免圆柱旋转时出现接缝竖线
     function neb(cx, cy, r, col, alpha){
-      var rg = g.createRadialGradient(cx, cy, 0, cx, cy, r);
-      rg.addColorStop(0, col.replace("A", alpha));
-      rg.addColorStop(.55, col.replace("A", alpha * .45));
-      rg.addColorStop(1, col.replace("A", 0));
-      g.fillStyle = rg;
-      g.fillRect(cx - r, cy - r, r * 2, r * 2);
+      [-w, 0, w].forEach(function(dx){
+        var x0 = cx + dx;
+        var rg = g.createRadialGradient(x0, cy, 0, x0, cy, r);
+        rg.addColorStop(0, col.replace("A", alpha));
+        rg.addColorStop(.55, col.replace("A", alpha * .45));
+        rg.addColorStop(1, col.replace("A", 0));
+        g.fillStyle = rg;
+        g.fillRect(x0 - r, cy - r, r * 2, r * 2);
+      });
     }
     neb(180, 150, 300, "rgba(58,110,220,A)", .55);
     neb(720, 300, 320, "rgba(122,74,220,A)", .42);
