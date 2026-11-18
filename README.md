@@ -53,11 +53,14 @@
 
 ```
 .
-├── index.html    # 全部内容：HTML + CSS + 3D 场景 + 粒子系统（内嵌 three.js）
-├── bgm.mp3       # 背景音乐
-├── preview.png   # 预览图 / 分享卡片缩略图
+├── index.html      # 130KB：页面结构 + 样式 + 3D 场景 + 粒子系统（业务代码全在这）
+├── three.min.js    # 599KB：three.js r150 引擎，vendor 文件不用看
+├── bgm.mp3         # 背景音乐
+├── preview.png     # 预览图 / 分享卡片缩略图
 └── README.md
 ```
+
+想直接读代码，点开 `index.html` 即可——除了一行 `<script src="three.min.js">`，其余都是手写逻辑，从 `CONFIG` 开始往下就是完整实现。
 
 ## 自己改一份
 
@@ -73,7 +76,7 @@ var CONFIG = {
 
 - 顶部横幅文字：搜 `bannerTxt`，改标签里的内容
 - 档案卡内容：搜 `pf-rows`，四行 `性别 / 身高 / 年龄 / 爱好`
-- 换音乐：替换 `bgm.mp3` 即可（记得同时更新 `<source>` 里的 base64，或直接删掉那个 source）
+- 换音乐：直接替换 `bgm.mp3` 即可
 
 ## 兼容性
 
