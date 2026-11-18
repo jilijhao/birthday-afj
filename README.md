@@ -6,7 +6,7 @@
 
 [🎆 在线预览](https://jilijhao.github.io/birthday-afj/) &nbsp;·&nbsp; [🎮 玩法](#玩法) &nbsp;·&nbsp; [🛠 技术要点](#技术要点) &nbsp;·&nbsp; [✏️ 自己改一份](#自己改一份)
 
-<img src="./preview.png" width="300" alt="预览" />
+<img src="./preview.png" width="780" alt="预览" />
 
 </div>
 
