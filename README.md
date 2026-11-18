@@ -4,10 +4,7 @@
 
 **玻璃罩里的 3D 星空蛋糕 · 满天乱撞的星星 · 一直在放的烟花**
 
-[![在线预览](https://img.shields.io/badge/在线预览-%E7%82%B9%E6%88%91%E6%89%93%E5%BC%80-2ea44f?style=for-the-badge)](https://jilijhao.github.io/birthday-afj/)
-[![单文件](https://img.shields.io/badge/%E5%8D%95%E6%96%87%E4%BB%B6-HTML5-e34f26?style=flat-square)](#)
-[![Three.js](https://img.shields.io/badge/3D-Three.js%20r150-000000?style=flat-square)](#)
-[![无依赖](https://img.shields.io/badge/%E5%A4%96%E9%93%BE%E4%BE%9D%E8%B5%96-0-8957e5?style=flat-square)](#)
+[🎆 在线预览](https://jilijhao.github.io/birthday-afj/) &nbsp;·&nbsp; [🎮 玩法](#玩法) &nbsp;·&nbsp; [🛠 技术要点](#技术要点) &nbsp;·&nbsp; [✏️ 自己改一份](#自己改一份)
 
 <img src="./preview.png" width="300" alt="预览" />
 
